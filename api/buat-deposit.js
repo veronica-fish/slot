@@ -2,7 +2,7 @@ const axios = require('axios');
 const crypto = require('crypto');
 const admin = require('firebase-admin');
 
-// Inisialisasi Firebase (membaca Environment Variable Vercel)
+// Inisialisasi Firebase
 if (!admin.apps.length) {
     const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
     admin.initializeApp({
@@ -11,17 +11,20 @@ if (!admin.apps.length) {
 }
 const db = admin.firestore();
 
-module.exports = async (req, res) => {
-    // Izinkan CORS agar Frontend bisa memanggil API ini
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    
-    if (req.method === 'OPTIONS') return res.status(200).end();
-    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+exports.handler = async function(event, context) {
+    // Handle CORS
+    const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    };
+
+    if (event.httpMethod === 'OPTIONS') return { statusCode: 200, headers, body: '' };
+    if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: 'Method Not Allowed' };
 
     try {
-        const { nominal, userId, username } = req.body;
+        const body = JSON.parse(event.body);
+        const { nominal, userId, username } = body;
         const invoiceNumber = "INV-" + Date.now();
         
         const DOKU_CLIENT_ID = process.env.DOKU_CLIENT_ID;
@@ -37,12 +40,10 @@ module.exports = async (req, res) => {
         const timestamp = new Date().toISOString();
         const target = "/checkout/v1/payment";
         
-        // Generate Signature Doku
         const digest = crypto.createHash('sha256').update(JSON.stringify(payload)).digest('base64');
         const component = `Client-Id:${DOKU_CLIENT_ID}\nRequest-Id:${requestId}\nRequest-Timestamp:${timestamp}\nRequest-Target:${target}\nDigest:${digest}`;
         const signature = crypto.createHmac('sha256', DOKU_SECRET_KEY).update(component).digest('base64');
 
-        // Tembak API Doku
         const response = await axios.post(`https://api.doku.com${target}`, payload, {
             headers: {
                 'Client-Id': DOKU_CLIENT_ID,
@@ -53,20 +54,22 @@ module.exports = async (req, res) => {
             }
         });
 
-        // Simpan tagihan ke Firestore (Status Pending)
         await db.collection('deposits').add({
-            uid: userId, 
-            username: username, 
-            nominal: nominal, 
-            metode: "Doku",
-            status: "Pending", 
-            invoice: invoiceNumber, 
-            tanggal: admin.firestore.FieldValue.serverTimestamp()
+            uid: userId, username: username, nominal: nominal, metode: "Doku",
+            status: "Pending", invoice: invoiceNumber, tanggal: admin.firestore.FieldValue.serverTimestamp()
         });
 
-        return res.status(200).json({ url: response.data.response.payment.url });
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({ url: response.data.response.payment.url })
+        };
     } catch (error) {
         console.error("Doku Error: ", error.response ? error.response.data : error.message);
-        return res.status(500).json({ error: "Gagal memproses ke Doku" });
+        return {
+            statusCode: 500,
+            headers,
+            body: JSON.stringify({ error: "Gagal memproses ke Doku" })
+        };
     }
 };
