@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Promo - NUSA138</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Khusus Halaman Detail Promo */
+        .promo-detail-body {
+            background-color: #ffffff; 
+            color: #000000;
+            padding: 20px 15px;
+            min-height: 100vh;
+        }
+
+        .promo-detail-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .promo-detail-img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .promo-rules {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .promo-rules ol {
+            padding-left: 20px;
+        }
+
+        .promo-rules li {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        /* Warna link khusus di dalam teks */
+        .text-blue { color: #0000FF; font-weight: bold; }
+        .text-green { color: #00AA00; font-weight: bold; }
+        .text-grey { color: #999999; font-style: italic; }
+        
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <div class="logo-area">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/logo.png" alt="Nusa138 Logo">
+        </div>
+        <div class="menu-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <!-- ISI KONTEN PROMO (DINAMIS) -->
+    <div class="promo-detail-body">
+        
+        <!-- Judul Atas -->
+        <div class="promo-detail-title" id="dynamicTitle">Memuat...</div>
+
+        <!-- Gambar Banner -->
+        <img src="" alt="Banner Promo" class="promo-detail-img" id="dynamicImage">
+
+        <!-- Judul Bawah -->
+        <div class="promo-detail-title" id="dynamicTitle2">Memuat...</div>
+
+        <!-- Syarat & Ketentuan -->
+        <div class="promo-rules" id="dynamicRules">
+            <!-- Konten akan diisi otomatis oleh JavaScript -->
+        </div>
+
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="window.location.href='promosi.html'">
+            <i class="fas fa-chevron-left"></i>
+            <span>Kembali</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Akun Saya</span>
+        </div>
+        <div class="nav-item active">
+            <i class="fas fa-gift"></i>
+            <span>Promosi</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-comment-dots"></i>
+            <span>Live Chat</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </div>
+    </nav>
+
+    <!-- JAVASCRIPT UNTUK MENGUBAH KONTEN -->
+    <script>
+        // 1. Ambil parameter dari URL (misal: promo-detail.html?id=wheelspin)
+        const urlParams = new URLSearchParams(window.location.search);
+        const promoId = urlParams.get('id');
+
+        // 2. Siapkan Database Konten Promo
+        const promoData = {
+            'mingguan': {
+                title: 'BONUS MINGGUAN',
+                image: 'https://raw.githubusercontent.com/veronica-fish/slot/main/banner1.png',
+                rules: `
+                    <ol>
+                        <li>Promo ini berlaku untuk semua member aktif NUSA138.</li>
+                        <li>Bonus dibagikan secara otomatis setiap hari Senin.</li>
+                        <li>Minimal Turnover yang harus dicapai adalah 5x dari total deposit dalam seminggu.</li>
+                        <li>Tidak ada batasan maksimal bonus untuk promo ini.</li>
+                        <li>Semua keputusan dari pihak NUSA138 bersifat mutlak dan tidak dapat diganggu gugat.</li>
+                    </ol>
+                `
+            },
+            'wheelspin': {
+                title: 'EVENT WHEELSPIN',
+                image: 'https://raw.githubusercontent.com/veronica-fish/slot/main/banner2.png',
+                rules: `
+                    <ol>
+                        <li>Minimal Deposit Rp. 500.000,- dalam 1 hari yang sama untuk 1 tiket (Berlaku Kelipatan)</li>
+                        <li>Maksimal Untuk Melakukan Claim Adalah 2 Hari (Akumulasi deposit tetap dihitung harian)</li>
+                        <li>PERSYARATAN UNTUK MENDAPATKAN TIKET WHEELSPIN MEMBER HARUS MENCAPAI TURNOVER X1 DARI NILAI DEPOSIT</li>
+                        <li>JIKA SUDAH CLAIM MISTERY BOX MAKA SUDAH TIDAK BISA CLAIM WHEELSPIN LAGI BEGITU JUGA SEBALIK NYA</li>
+                        <li>MEMBER WAJIB CLAIM UNTUK MENDAPATKAN KODE KUPON (TIKET) DAN CLAIM melalui <span class="text-blue">TELEGRAM EVENT ATAU</span> <span class="text-green">WHATSAPP ATAU</span> <span class="text-blue">LIVE CHAT</span></li>
+                        <li>LINK PENGAMBILAN HADIAH <span class="text-grey">KLIK DISINI</span> BONUS AKAN OTOMATIS DI BERIKAN SETIAP HARI SELASA</li>
+                        <li>MAXIMAL CLAIM TIKET ADALAH 5X DALAM 1MGG (PERIODE 1 MINGGU BERAKHIR DI SETIAP HARI SELASA)</li>
+                        <li>TIKET LUCKY SPIN HANYA BERLAKU SAMPAI HARI SENIN PUKUL 23:59 , JIKA TIKET TERSEBUT TIDAK TERPAKAI / DI CLAIM, TIKET TERSEBUT AKAN HANGUS.</li>
+                        <li>Wajib Screenshot hasil putaran wheelspin, dan kirimkan ke admin kami</li>
+                        <li>Semua keputusan dari pihak NUSA138 bersifat mutlak dan tidak dapat diganggu gugat.</li>
+                    </ol>
+                `
+            },
+            'mystery': {
+                title: 'EVENT MYSTERY BOX',
+                image: 'https://raw.githubusercontent.com/veronica-fish/slot/main/box.png',
+                rules: `
+                    <ol>
+                        <li>Event ini terbuka untuk semua member NUSA138.</li>
+                        <li>Syarat klaim mystery box: Mencapai turnover tertentu.</li>
+                        <li>Hadiah utama berupa saldo uang asli dan voucher menarik.</li>
+                        <li>Semua keputusan dari pihak NUSA138 bersifat mutlak dan tidak dapat diganggu gugat.</li>
+                    </ol>
+                `
+            },
+            'harian': {
+                title: 'BONUS HARIAN',
+                image: 'https://raw.githubusercontent.com/veronica-fish/slot/main/harian.png',
+                rules: `
+                    <ol>
+                        <li>Bonus harian bisa diklaim 1x sehari.</li>
+                        <li>Berlaku untuk deposit kelipatan.</li>
+                        <li>Bonus akan langsung masuk ke saldo akun Anda.</li>
+                        <li>Semua keputusan dari pihak NUSA138 bersifat mutlak dan tidak dapat diganggu gugat.</li>
+                    </ol>
+                `
+            },
+            'referral': {
+                title: 'NUSA138 REFERRAL',
+                image: 'https://raw.githubusercontent.com/veronica-fish/slot/main/referral.png',
+                rules: `
+                    <ol>
+                        <li>Ajak teman sebanyak mungkin untuk bergabung di NUSA138.</li>
+                        <li>Dapatkan bonus persentase dari turnover downline Anda.</li>
+                        <li>Bonus referral dibagikan setiap bulan.</li>
+                        <li>Semua keputusan dari pihak NUSA138 bersifat mutlak dan tidak dapat diganggu gugat.</li>
+                    </ol>
+                `
+            }
+        };
+
+        // 3. Tampilkan Data Berdasarkan ID dari URL
+        if (promoId && promoData[promoId]) {
+            const data = promoData[promoId];
+            
+            // Ubah isi HTML
+            document.getElementById('dynamicTitle').innerText = data.title;
+            document.getElementById('dynamicTitle2').innerText = data.title;
+            document.getElementById('dynamicImage').src = data.image;
+            document.getElementById('dynamicRules').innerHTML = data.rules;
+            
+            // Ubah Title di Tab Browser
+            document.title = data.title + " - NUSA138";
+        } else {
+            // Jika ID tidak ditemukan di URL
+            document.getElementById('dynamicTitle').innerText = "Promo Tidak Ditemukan";
+            document.getElementById('dynamicTitle2').style.display = "none";
+            document.getElementById('dynamicRules').innerHTML = "<p>Maaf, halaman promo yang Anda cari tidak tersedia. Silakan kembali ke halaman Promosi.</p>";
+        }
+    </script>
+</body>
+</html>

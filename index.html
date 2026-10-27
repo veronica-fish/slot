@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUSA138 - Situs Resmi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- SCRIPT FIREBASE UNTUK LOGOUT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDscvQx58W-53wXjzKgyOz9cfjQkA3LZI",
+            authDomain: "nusa138-2745d.firebaseapp.com",
+            projectId: "nusa138-2745d",
+            storageBucket: "nusa138-2745d.firebasestorage.app",
+            messagingSenderId: "664945100438",
+            appId: "1:664945100438:web:497f069d45216d9b62e4b7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.doLogout = async function() {
+            try {
+                await signOut(auth);
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('currentUser');
+                alert("Anda telah keluar.");
+                window.location.reload(); 
+            } catch (error) {
+                console.error("Gagal Logout", error);
+            }
+        }
+    </script>
+
+    <!-- OVERLAY GELAP -->
+    <div id="menuOverlay" class="menu-overlay" onclick="toggleMenu()"></div>
+
+    <!-- MENU SAMPING -->
+    <div id="sideMenu" class="side-menu">
+        <!-- Tampilan Guest -->
+        <div id="guestView" style="display: flex; flex-direction: column; height: 100%;">
+            <div class="menu-top">
+                <div class="close-btn-wrapper">
+                    <button class="btn-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="welcome-text">
+                    <h2>Selamat datang</h2>
+                    <p>Silahkan masuk atau daftar</p>
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn-masuk" onclick="window.location.href='masuk.html'">Masuk</button>
+                    <button class="btn-daftar" onclick="window.location.href='daftar.html'">Daftar</button>
+                </div>
+            </div>
+            <div class="menu-bottom">
+                <a href="index.html" class="menu-item"><i class="fas fa-home"></i> <span>Beranda</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-info-circle"></i> <span>Tentang Kami</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-phone-alt"></i> <span>Hubungi Kami</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-download"></i> <span>Download</span></a>
+                <div class="menu-item language-item">
+                    <i class="fas fa-language"></i> 
+                    <select class="lang-select">
+                        <option>Bahasa Indonesia</option>
+                        <option>English</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tampilan Member (Sudah Login) -->
+        <div id="memberView" style="display: none; flex-direction: column; height: 100%;">
+            <div class="menu-top">
+                <div class="close-btn-wrapper">
+                    <button class="btn-close" onclick="toggleMenu()"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="menu-actions">
+                    <button class="btn-menu-deposit" onclick="window.location.href='withdraw.html?tab=deposit'">Deposit</button>
+                    <button class="btn-menu-withdraw" onclick="window.location.href='withdraw.html?tab=withdraw'">Withdraw</button>
+                </div>
+                <div class="menu-greeting">Hai, Player123</div>
+                <div class="menu-balance">
+                    <i class="fas fa-coins"></i>
+                    <span>0,00 K</span>
+                    <i class="fas fa-sync-alt refresh-icon"></i>
+                </div>
+            </div>
+            <div class="menu-bottom">
+                <a href="index.html" class="menu-item"><i class="fas fa-home"></i> <span>Beranda</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-user"></i> <span>Profil</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-gift"></i> <span>Bonus</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-ticket-alt"></i> <span>Rewards</span> <span class="badge-baru">Baru</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-money-bill-transfer"></i> <span>Transfer</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-history"></i> <span>Riwayat</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-users"></i> <span>Referral</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-star"></i> <span>Favorite</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-phone-alt"></i> <span>Hubungi Kami</span></a>
+                <a href="#" class="menu-item"><i class="fas fa-download"></i> <span>Download</span></a>
+                <div class="menu-item language-item">
+                    <i class="fas fa-language"></i> 
+                    <select class="lang-select">
+                        <option>Bahasa Indonesia</option>
+                        <option>English</option>
+                    </select>
+                </div>
+                <a href="#" class="menu-item" onclick="simulateLogout()"><i class="fas fa-sign-out-alt"></i> <span>Keluar</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <div class="logo-area">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/logo.png" alt="Nusa138 Logo">
+        </div>
+        <div class="menu-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <!-- TEKS BERJALAN -->
+    <div class="marquee-container">
+        <i class="fas fa-volume-up" style="color: #333; margin-right: 10px;"></i>
+        <div class="marquee-text">
+            <span>NUSA138 : LINK LOGIN AKSES SITUS NUSA138 HARI INI</span>
+        </div>
+        <i class="fas fa-chevron-right arrow-right"></i>
+    </div>
+
+    <!-- BANNER CAROUSEL -->
+    <div class="banner-carousel">
+        <img id="bannerImage" src="https://raw.githubusercontent.com/veronica-fish/slot/main/banner1.png" alt="Banner Nusa138" class="banner-img">
+        <button class="nav-btn prev-btn" onclick="prevBanner()"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn next-btn" onclick="nextBanner()"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- TOMBOL AKSI (GUEST) -->
+    <div class="guest-buttons" id="guestButtons">
+        <button class="btn-guest-masuk" onclick="window.location.href='masuk.html'">MASUK</button>
+        <button class="btn-guest-daftar" onclick="window.location.href='daftar.html'">DAFTAR</button>
+    </div>
+
+    <!-- TOMBOL AKSI (MEMBER) -->
+    <div class="action-buttons" id="memberButtons" style="display: none;">
+        <button class="btn-yellow" onclick="window.location.href='withdraw.html?tab=deposit'">Deposit</button>
+        <button class="btn-yellow">Transfer</button>
+        <button class="btn-yellow" onclick="window.location.href='withdraw.html?tab=withdraw'">Withdraw</button>
+    </div>
+
+    <!-- KATEGORI (SLIDER) -->
+    <div class="category-section">
+        <div class="arrow-btn" onclick="scrollCategories('left')">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="category-scroll" id="categoryScroll">
+            <div class="cat-item"><div class="cat-icon"><i class="fas fa-dice"></i></div><span>Slot</span></div>
+            <div class="cat-item"><div class="cat-icon"><i class="fas fa-bullseye"></i><span class="promo-badge">PROMO</span></div><span>Togel</span></div>
+            <div class="cat-item"><div class="cat-icon"><i class="fas fa-kiwi-bird"></i></div><span>Sabung Ayam</span></div>
+            <div class="cat-item"><div class="cat-icon"><i class="fas fa-gamepad"></i></div><span>Games</span></div>
+            <div class="cat-item"><div class="cat-icon"><i class="fas fa-fish"></i></div><span>Tembak Ikan</span></div>
+            <div class="cat-item"><div class="cat-icon"><i class="fas fa-running"></i></div><span>Sports</span></div>
+            <div class="cat-item"><div class="cat-icon"><i class="fas fa-circle-notch"></i></div><span>Casino</span></div>
+            <div class="cat-item"><div class="cat-icon"><i class="fas fa-candy-cane"></i><span class="promo-badge">PROMO</span></div><span>Sweet Bonanza PC</span></div>
+        </div>
+        <div class="arrow-btn" onclick="scrollCategories('right')">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+    </div>
+
+    <!-- PAPAN PERINGKAT -->
+    <div class="leaderboard-container">
+        <div class="leaderboard-header">
+            <h3><i class="fas fa-trophy" style="color: #FFD700;"></i> Papan Peringkat</h3>
+            <button class="btn-blue">Selengkapnya</button>
+        </div>
+        <div class="leaderboard-list">
+            <div class="lb-row"><span>sa*****7</span><span>Rp 1.000</span><span>Rp 3.749.000</span></div>
+            <div class="lb-row"><span>ap*****a</span><span>Rp 6.000</span><span>Rp 1.529.100</span></div>
+            <div class="lb-row"><span>ma*****2</span><span>Rp 2.000</span><span>Rp 1.307.280</span></div>
+            <div class="lb-row"><span>aj*****5</span><span>Rp 12.000</span><span>Rp 3.512.400</span></div>
+            <div class="lb-row"><span>yo*****n</span><span>Rp 60.000</span><span>Rp 21.360.000</span></div>
+            <div class="lb-row"><span>th*****r</span><span>Rp 6.000</span><span>Rp 7.026.000</span></div>
+        </div>
+    </div>
+
+    <!-- PROGRESSIVE JACKPOT -->
+    <div class="progressive-jackpot">
+        <div class="pj-label">PROGRESSIVE JACKPOT</div>
+        <div class="pj-amount" id="jackpotAmount">17,929,496,463.73</div>
+    </div>
+
+    <!-- METODE PEMBAYARAN -->
+    <div class="payment-grid">
+        <button class="pay-btn">QRIS</button>
+        <button class="pay-btn">BCA</button>
+        <button class="pay-btn">mandiri</button>
+        <button class="pay-btn">CIMB NIAGA</button>
+        <button class="pay-btn">BNI</button>
+        <button class="pay-btn">BANK BRI</button>
+        <button class="pay-btn">Danamon</button>
+        <button class="pay-btn">PermataBank</button>
+        <button class="pay-btn">OVO</button>
+        <button class="pay-btn">gopay</button>
+    </div>
+    
+    <!-- FOOTER LOGO -->
+    <div class="footer-logo">
+        <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/infini88.png" alt="Infini88 Logo">
+    </div>
+
+    <!-- KONTEN TEKS SEO -->
+    <article class="seo-article">
+        <div class="certificate-container">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/sertifikat.png" alt="Sertifikat Nusa138" class="cert-img">
+        </div>
+        <h2>Nusa138 Hadir Dengan Misi Harian Menarik</h2>
+        <p>Perkembangan platform game online saat ini membuat banyak pemain mencari tempat bermain yang tidak hanya memiliki tampilan menarik, tetapi juga menghadirkan pengalaman yang lebih interaktif setiap harinya. Nusa138 hadir sebagai salah satu situs yang membawa konsep berbeda melalui sistem misi harian yang bisa diselesaikan oleh member untuk membuka berbagai fitur bermain tanpa batas.</p>
+    </article>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="window.location.href='index.html'"><i class="fas fa-chevron-left"></i><span>Kembali</span></div>
+        <div class="nav-item" onclick="window.location.href='withdraw.html?tab=deposit'"><i class="fas fa-file-invoice-dollar"></i><span>Akun Saya</span></div>
+        <div class="nav-item" onclick="window.location.href='promosi.html'"><i class="fas fa-gift"></i><span>Promosi</span></div>
+        <div class="nav-item"><i class="fas fa-comment-dots"></i><span>Live Chat</span></div>
+        <div class="nav-item active"><i class="fas fa-home"></i><span>Beranda</span></div>
+    </nav>
+
+    <!-- SCRIPT LOGIKA UI -->
+    <script>
+        // --- 1. FITUR MENU SAMPING ---
+        function toggleMenu() {
+            var menu = document.getElementById("sideMenu");
+            var overlay = document.getElementById("menuOverlay");
+            menu.classList.toggle("active");
+            overlay.classList.toggle("active");
+        }
+
+        // --- 2. CEK STATUS LOGIN ---
+        let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'; 
+        let currentUsername = localStorage.getItem('currentUser');
+
+        function updateUI() {
+            const guestBtns = document.getElementById("guestButtons");
+            const memberBtns = document.getElementById("memberButtons");
+            const guestView = document.getElementById("guestView");
+            const memberView = document.getElementById("memberView");
+            const menuGreeting = document.querySelector(".menu-greeting");
+
+            if (isLoggedIn) {
+                guestBtns.style.display = "none";
+                memberBtns.style.display = "flex"; 
+                guestView.style.display = "none";
+                memberView.style.display = "flex";
+                if(currentUsername && menuGreeting) { menuGreeting.innerText = "Hai, " + currentUsername; }
+            } else {
+                guestBtns.style.display = "flex";
+                memberBtns.style.display = "none";
+                guestView.style.display = "flex";
+                memberView.style.display = "none";
+            }
+        }
+
+        function simulateLogout() {
+            window.doLogout(); 
+        }
+
+        window.onload = updateUI;
+
+        // --- 3. ANIMASI JACKPOT ---
+        let jackpotValue = 17929496463.73; 
+        const maxJackpot = 999999999999999; 
+        function formatRupiah(angka) {
+            return angka.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        setInterval(function() {
+            jackpotValue += 1; 
+            if (jackpotValue >= maxJackpot) jackpotValue = 0; 
+            document.getElementById("jackpotAmount").innerText = formatRupiah(jackpotValue);
+        }, 2000);
+
+        // --- 4. BANNER CAROUSEL ---
+        const banners = [
+            "https://raw.githubusercontent.com/veronica-fish/slot/main/banner1.png",
+            "https://raw.githubusercontent.com/veronica-fish/slot/main/banner2.png"
+        ];
+        let currentBannerIndex = 0;
+        let bannerInterval;
+        const bannerImgElement = document.getElementById("bannerImage");
+
+        function changeBanner(index) {
+            bannerImgElement.style.opacity = 0; 
+            setTimeout(() => {
+                bannerImgElement.src = banners[index];
+                bannerImgElement.style.opacity = 1;
+            }, 300); 
+            currentBannerIndex = index;
+        }
+        function nextBanner() { changeBanner((currentBannerIndex + 1) % banners.length); resetTimer(); }
+        function prevBanner() { changeBanner((currentBannerIndex - 1 + banners.length) % banners.length); resetTimer(); }
+        function startTimer() { bannerInterval = setInterval(() => { changeBanner((currentBannerIndex + 1) % banners.length); }, 5000); }
+        function resetTimer() { clearInterval(bannerInterval); startTimer(); }
+        window.addEventListener('load', () => { startTimer(); });
+
+        // --- 5. SCROLL KATEGORI ---
+        function scrollCategories(direction) {
+            const container = document.getElementById('categoryScroll');
+            const scrollAmount = 150; 
+            if (direction === 'left') { container.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); } 
+            else { container.scrollBy({ left: scrollAmount, behavior: 'smooth' }); }
+        }
+    </script>
+</body>
+</html>

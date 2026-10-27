@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akun Saya - NUSA138</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .header-title { background-color: #8b6508; color: #ffffff; text-align: center; padding: 15px; font-size: 18px; font-weight: bold; border-bottom: 2px solid #FFD700; }
+        .tab-menu { display: flex; background-color: #ffffff; border: 1px solid #ccc; margin: 15px; border-radius: 5px; overflow: hidden; }
+        .tab-item { flex: 1; text-align: center; padding: 12px 0; font-size: 13px; color: #333; font-weight: bold; cursor: pointer; border-right: 1px solid #ccc; }
+        .tab-item:last-child { border-right: none; }
+        .tab-item.active { background-color: #FFD700; color: #000; }
+        .form-container { background-color: #e0e6e0; margin: 15px; padding: 15px; border-radius: 5px; border: 1px solid #ccc; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 14px; color: #000; margin-bottom: 5px; font-weight: 500; }
+        .form-group label span { color: #ff0000; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #999; border-radius: 3px; font-size: 14px; color: #333; outline: none; }
+        .form-control:disabled { background-color: #888; color: #fff; cursor: not-allowed; }
+        .helper-text { font-size: 12px; color: #555; margin-top: 5px; }
+        .notif-deposit { background-color: #d9edf7; color: #31708f; padding: 10px; border-radius: 5px; font-size: 12px; margin-bottom: 15px; border: 1px solid #bce8f1; }
+        .quick-amounts { display: flex; gap: 5px; margin-bottom: 8px; }
+        .quick-btn { flex: 1; padding: 10px 0; background: #f0f0f0; border: 1px solid #ccc; border-radius: 3px; font-weight: bold; cursor: pointer; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .quick-btn:active { background: #ddd; }
+        .qris-info-box { background: #fff; border: 1px solid #ccc; border-radius: 5px; padding: 15px; margin-top: 15px; font-size: 12px; color: #333; }
+        .qris-info-box strong { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;}
+        .qris-info-box ul { padding-left: 15px; margin-top: 10px; }
+        .qris-info-box li { margin-bottom: 8px; line-height: 1.4; }
+        .btn-action { width: 100%; padding: 12px; background: linear-gradient(to bottom, #f9f9f9, #d0d0d0); border: 1px solid #888; border-radius: 5px; font-size: 14px; font-weight: bold; color: #333; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
+        .btn-action:active { background: #bbb; }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="logo-area">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/logo.png" alt="Nusa138 Logo">
+        </div>
+        <div class="menu-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <div class="header-title">Bank</div>
+
+    <div class="tab-menu">
+        <div class="tab-item" id="tabRekening" onclick="switchTab('rekening')">Rekening</div>
+        <div class="tab-item active" id="tabDeposit" onclick="switchTab('deposit')">Deposit</div>
+        <div class="tab-item" id="tabTransfer" onclick="alert('Fitur Transfer belum tersedia.')">Transfer</div>
+        <div class="tab-item" id="tabWithdraw" onclick="switchTab('withdraw')">Withdraw</div>
+    </div>
+
+    <!-- KONTEN REKENING -->
+    <div class="form-container" id="contentRekening" style="display: none;">
+        <div class="form-group">
+            <label>Nama Bank</label>
+            <input type="text" id="rekBank" class="form-control" value="Memuat..." disabled>
+        </div>
+        <div class="form-group">
+            <label>Nomor Rekening Bank</label>
+            <input type="text" id="rekNo" class="form-control" value="Memuat..." disabled>
+        </div>
+        <div class="form-group">
+            <label>Nama Rekening</label>
+            <input type="text" id="rekNama" class="form-control" value="Memuat..." disabled>
+        </div>
+    </div>
+
+    <!-- KONTEN DEPOSIT -->
+    <div class="form-container" id="contentDeposit" style="display: block;">
+        <div class="notif-deposit">
+            <strong>Kini telah hadir pembayaran QRIS proses Deposit secara instan</strong>
+        </div>
+        
+        <form id="depositForm" onsubmit="prosesDeposit(event)">
+            <div class="form-group">
+                <label>Nama Bank</label>
+                <input type="text" id="depBank" class="form-control" value="Memuat..." disabled>
+            </div>
+            <div class="form-group">
+                <label>Nomor Rekening Bank</label>
+                <input type="text" id="depNo" class="form-control" value="Memuat..." disabled>
+            </div>
+            <div class="form-group">
+                <label>Nama Rekening</label>
+                <input type="text" id="depNama" class="form-control" value="Memuat..." disabled>
+            </div>
+
+            <div class="form-group">
+                <label>Tujuan <span>*</span></label>
+                <select class="form-control" required>
+                    <option value="QRIS">QRIS - INSTANT - OTOMATIS PROSES</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Jumlah Transfer <span>*</span></label>
+                <div class="helper-text" style="margin-bottom: 5px;">(Silahkan pilih nominal dari tombol atau masukkan secara manual)</div>
+                
+                <div class="quick-amounts">
+                    <button type="button" class="quick-btn" onclick="setNominal(50)">50</button>
+                    <button type="button" class="quick-btn" onclick="setNominal(200)">200</button>
+                    <button type="button" class="quick-btn" onclick="setNominal(1000)">1000</button>
+                </div>
+
+                <input type="number" id="nominalDeposit" class="form-control" placeholder="0" required oninput="hitungNominalAsliDeposit()">
+                <div class="helper-text">
+                    Min : 10 / Max : 9,890<br>
+                    IDR 1 = 1,000
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Nominal Asli</label>
+                <input type="text" id="nominalAsliDeposit" class="form-control" value="0" disabled>
+            </div>
+
+            <div class="form-group">
+                <label>Berita</label>
+                <textarea class="form-control" rows="3" placeholder=""></textarea>
+            </div>
+
+            <div class="qris-info-box">
+                <strong>
+                    <span>QRIS - UVW</span>
+                    <i class="fas fa-qrcode" style="font-size: 24px; color: #000;"></i>
+                </strong>
+                <ul>
+                    <li>Transaksi QRIS kemungkinan akan dikenakan <strong>biaya administrasi</strong>.</li>
+                    <li><strong>Download Barcode QRIS</strong> dengan cara sentuh & tahan gambar barcode, kemudian <strong>upload Barcode QRIS</strong> ke menu pembayaran OVO / Gopay / DANA / LinkAja / BCA agar koin langsung masuk ke saldo utama.</li>
+                    <li><strong>Barcode QRIS</strong> akan muncul setelah klik "Kirim".</li>
+                </ul>
+            </div>
+
+            <button type="button" class="btn-action" onclick="document.getElementById('depositForm').reset(); hitungNominalAsliDeposit();">ULANGI</button>
+            <button type="submit" class="btn-action" id="btnKirimDeposit">KIRIM</button>
+        </form>
+    </div>
+
+    <!-- KONTEN WITHDRAW -->
+    <div class="form-container" id="contentWithdraw" style="display: none;">
+        <form id="withdrawForm" onsubmit="prosesWithdraw(event)">
+            <div class="form-group">
+                <label>Nama Bank <span>*</span></label>
+                <input type="text" id="wdBank" class="form-control" value="Memuat..." disabled>
+            </div>
+            <div class="form-group">
+                <label>Nomor Rekening Bank</label>
+                <input type="text" id="wdNo" class="form-control" value="Memuat..." disabled>
+            </div>
+            <div class="form-group">
+                <label>Nama Rekening</label>
+                <input type="text" id="wdNama" class="form-control" value="Memuat..." disabled>
+            </div>
+            <div class="form-group">
+                <label>Saldo Saat Ini</label>
+                <input type="text" id="saldoSaatIni" class="form-control" value="Memuat..." disabled>
+            </div>
+            <div class="form-group">
+                <label>Nominal Withdraw <span>*</span></label>
+                <input type="number" id="nominalWithdraw" class="form-control" placeholder="Masukkan nominal (Min 50)" required oninput="hitungNominalAsliWithdraw()">
+                <div class="helper-text">Min : 50 / Max : 200,000<br>IDR 1 = 1,000</div>
+            </div>
+            <div class="form-group">
+                <label>Nominal Asli</label>
+                <input type="text" id="nominalAsliWithdraw" class="form-control" value="0" disabled>
+            </div>
+            <button type="submit" class="btn-action">KIRIM</button>
+        </form>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-chevron-left"></i><span>Kembali</span>
+        </div>
+        <div class="nav-item active" onclick="window.location.href='withdraw.html'">
+            <i class="fas fa-file-invoice-dollar"></i><span>Akun Saya</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='promosi.html'">
+            <i class="fas fa-gift"></i><span>Promosi</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-comment-dots"></i><span>Live Chat</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i><span>Beranda</span>
+        </div>
+    </nav>
+
+    <!-- FIREBASE SDK (Frontend) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc, increment, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDscvQx58W-53wXjzKgyOz9cfjQkA3LZI",
+            authDomain: "nusa138-2745d.firebaseapp.com",
+            projectId: "nusa138-2745d",
+            storageBucket: "nusa138-2745d.firebasestorage.app",
+            messagingSenderId: "664945100438",
+            appId: "1:664945100438:web:497f069d45216d9b62e4b7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUserUID = null;
+        let currentUserSaldo = 0;
+        let currentUserData = null;
+
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        }
+
+        window.switchTab = function(tabName) {
+            document.getElementById('contentRekening').style.display = 'none';
+            document.getElementById('contentDeposit').style.display = 'none';
+            document.getElementById('contentWithdraw').style.display = 'none';
+            
+            document.getElementById('tabRekening').classList.remove('active');
+            document.getElementById('tabDeposit').classList.remove('active');
+            document.getElementById('tabWithdraw').classList.remove('active');
+
+            if (tabName === 'rekening') {
+                document.getElementById('tabRekening').classList.add('active');
+                document.getElementById('contentRekening').style.display = 'block';
+            } else if (tabName === 'deposit') {
+                document.getElementById('tabDeposit').classList.add('active');
+                document.getElementById('contentDeposit').style.display = 'block';
+            } else if (tabName === 'withdraw') {
+                document.getElementById('tabWithdraw').classList.add('active');
+                document.getElementById('contentWithdraw').style.display = 'block';
+            }
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get('tab');
+        if (tabParam === 'withdraw') { switchTab('withdraw'); } 
+        else if (tabParam === 'deposit') { switchTab('deposit'); } 
+        else { switchTab('deposit'); }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserUID = user.uid;
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+
+                if (userSnap.exists()) {
+                    currentUserData = userSnap.data();
+                    currentUserSaldo = currentUserData.saldo || 0; 
+                    
+                    document.getElementById('rekBank').value = currentUserData.bank || "Belum diatur";
+                    document.getElementById('rekNo').value = currentUserData.noRek || "-";
+                    document.getElementById('rekNama').value = currentUserData.namaRek || "-";
+
+                    document.getElementById('depBank').value = currentUserData.bank || "Belum diatur";
+                    document.getElementById('depNo').value = currentUserData.noRek || "-";
+                    document.getElementById('depNama').value = currentUserData.namaRek || "-";
+
+                    document.getElementById('wdBank').value = currentUserData.bank || "Belum diatur";
+                    document.getElementById('wdNo').value = currentUserData.noRek || "-";
+                    document.getElementById('wdNama').value = currentUserData.namaRek || "-";
+                    document.getElementById('saldoSaatIni').value = formatRupiah(currentUserSaldo);
+                } else {
+                    alert("Data user tidak ditemukan.");
+                    window.location.href = "index.html";
+                }
+            } else {
+                alert("Anda harus login terlebih dahulu!");
+                window.location.href = "masuk.html";
+            }
+        });
+
+        window.setNominal = function(amount) {
+            document.getElementById('nominalDeposit').value = amount;
+            hitungNominalAsliDeposit();
+        }
+
+        window.hitungNominalAsliDeposit = function() {
+            const nominal = document.getElementById('nominalDeposit').value;
+            const nominalAsliInput = document.getElementById('nominalAsliDeposit');
+
+            if (nominal) {
+                const totalAsli = parseInt(nominal) * 1000;
+                nominalAsliInput.value = formatRupiah(totalAsli);
+            } else {
+                nominalAsliInput.value = "0";
+            }
+        }
+
+        // PROSES DEPOSIT KE VERCEL API
+        window.prosesDeposit = async function(event) {
+            event.preventDefault();
+            const nominalInput = parseInt(document.getElementById('nominalDeposit').value);
+            const nominalAsliRp = nominalInput * 1000;
+            const btnSubmit = document.getElementById('btnKirimDeposit');
+
+            if (!nominalInput || nominalInput < 10) {
+                alert("Minimal Deposit adalah 10!");
+                return;
+            }
+
+            btnSubmit.innerText = "MENGHUBUNGI DOKU...";
+            btnSubmit.disabled = true;
+
+            try {
+                // Memanggil API Vercel (URL relatif karena satu domain)
+                const response = await fetch('/api/buat-deposit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        nominal: nominalAsliRp, 
+                        userId: currentUserUID,
+                        username: currentUserData.username
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if(response.ok) {
+                    // Arahkan user ke halaman pembayaran Doku
+                    window.location.href = data.url;
+                } else {
+                    alert("Gagal: " + data.error);
+                    btnSubmit.innerText = "KIRIM";
+                    btnSubmit.disabled = false;
+                }
+
+            } catch (error) {
+                alert("Gagal terhubung ke sistem pembayaran.");
+                btnSubmit.innerText = "KIRIM";
+                btnSubmit.disabled = false;
+            }
+        }
+
+        window.hitungNominalAsliWithdraw = function() {
+            const nominal = document.getElementById('nominalWithdraw').value;
+            const nominalAsliInput = document.getElementById('nominalAsliWithdraw');
+
+            if (nominal) {
+                const totalAsli = parseInt(nominal) * 1000;
+                nominalAsliInput.value = formatRupiah(totalAsli);
+            } else {
+                nominalAsliInput.value = "0";
+            }
+        }
+
+        window.prosesWithdraw = async function(event) {
+            event.preventDefault(); 
+            const nominalInput = parseInt(document.getElementById('nominalWithdraw').value);
+            const nominalAsliRp = nominalInput * 1000;
+            const btnSubmit = document.querySelector('#withdrawForm button[type="submit"]');
+
+            if (!nominalInput || nominalInput < 50) { alert("Minimal Withdraw adalah 50!"); return; }
+            if (nominalInput > 200000) { alert("Maksimal Withdraw adalah 200,000!"); return; }
+            if (currentUserSaldo < nominalAsliRp) {
+                alert("Saldo tidak cukup!\nSaldo: " + formatRupiah(currentUserSaldo));
+                return;
+            }
+
+            btnSubmit.innerText = "MEMPROSES...";
+            btnSubmit.disabled = true;
+
+            try {
+                const userRef = doc(db, "users", currentUserUID);
+                await updateDoc(userRef, { saldo: increment(-nominalAsliRp) });
+
+                await addDoc(collection(db, "withdrawals"), {
+                    uid: currentUserUID,
+                    username: currentUserData.username,
+                    nominal: nominalAsliRp,
+                    status: "Pending", 
+                    tanggal: serverTimestamp()
+                });
+
+                alert("WITHDRAW BERHASIL DIAJUKAN!");
+                window.location.reload(); 
+            } catch (error) {
+                alert("Error: " + error.message);
+                btnSubmit.innerText = "KIRIM";
+                btnSubmit.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - NUSA138</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background-color: #121212; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .header { background-color: #1a1a1a; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #FFD700; }
+        .header h1 { margin: 0; font-size: 20px; color: #FFD700; }
+        
+        #loginSection { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80vh; }
+        .login-box { background-color: #222; padding: 30px; border-radius: 10px; border: 1px solid #FFD700; text-align: center; width: 80%; max-width: 300px; }
+        .login-box input { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: none; box-sizing: border-box; }
+        .btn-login { width: 100%; padding: 10px; background-color: #FFD700; color: #000; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+
+        #dashboardSection { display: none; padding: 20px; }
+        .tabs { display: flex; margin-bottom: 20px; gap: 10px; }
+        .tab-btn { flex: 1; padding: 10px; text-align: center; background-color: #333; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .tab-btn.active { background-color: #FFD700; color: #000; }
+
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #333; }
+        th { background-color: #222; color: #FFD700; }
+        tr:nth-child(even) { background-color: #1a1a1a; }
+        
+        .btn-action-admin { padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; font-weight: bold; color: #fff; }
+        .btn-success { background-color: #28a745; }
+        .btn-danger { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1><i class="fas fa-shield-alt"></i> ADMIN NUSA138</h1>
+        <button id="btnLogout" onclick="logoutAdmin()" style="display:none; background:none; border:none; color:#fff; cursor:pointer;">Keluar</button>
+    </div>
+
+    <div id="loginSection">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <input type="text" id="adminUser" placeholder="Username Admin">
+            <input type="password" id="adminPass" placeholder="Password Admin">
+            <button class="btn-login" onclick="loginAdmin()">MASUK</button>
+        </div>
+    </div>
+
+    <div id="dashboardSection">
+        <div class="tabs">
+            <button class="tab-btn active" id="tabBtnDeposit" onclick="switchAdminTab('deposit')">Deposit Pending</button>
+            <button class="tab-btn" id="tabBtnWithdraw" onclick="switchAdminTab('withdraw')">Withdraw Pending</button>
+        </div>
+
+        <div id="tableDeposit">
+            <table>
+                <thead>
+                    <tr><th>Tanggal</th><th>Username</th><th>Nominal</th><th>Aksi</th></tr>
+                </thead>
+                <tbody id="tbodyDeposit"></tbody>
+            </table>
+        </div>
+
+        <div id="tableWithdraw" style="display: none;">
+            <table>
+                <thead>
+                    <tr><th>Tanggal</th><th>Username</th><th>Nominal</th><th>Aksi</th></tr>
+                </thead>
+                <tbody id="tbodyWithdraw"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDscvQx58W-53wXjzKgyOz9cfjQkA3LZI",
+            authDomain: "nusa138-2745d.firebaseapp.com",
+            projectId: "nusa138-2745d",
+            storageBucket: "nusa138-2745d.firebasestorage.app",
+            messagingSenderId: "664945100438",
+            appId: "1:664945100438:web:497f069d45216d9b62e4b7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const ADMIN_USERNAME = "donss11"; 
+        const ADMIN_PASSWORD = "Dons9988"; 
+
+        window.loginAdmin = function() {
+            const inputUser = document.getElementById('adminUser').value;
+            const inputPass = document.getElementById('adminPass').value;
+
+            if (inputUser === ADMIN_USERNAME && inputPass === ADMIN_PASSWORD) {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('dashboardSection').style.display = 'block';
+                document.getElementById('btnLogout').style.display = 'block';
+                loadData('deposit'); 
+            } else {
+                alert("Username atau Password Admin Salah!");
+            }
+        };
+
+        window.logoutAdmin = function() {
+            window.location.reload();
+        };
+
+        window.switchAdminTab = function(tab) {
+            if (tab === 'deposit') {
+                document.getElementById('tabBtnDeposit').classList.add('active');
+                document.getElementById('tabBtnWithdraw').classList.remove('active');
+                document.getElementById('tableDeposit').style.display = 'block';
+                document.getElementById('tableWithdraw').style.display = 'none';
+            } else {
+                document.getElementById('tabBtnDeposit').classList.remove('active');
+                document.getElementById('tabBtnWithdraw').classList.add('active');
+                document.getElementById('tableDeposit').style.display = 'none';
+                document.getElementById('tableWithdraw').style.display = 'block';
+            }
+            loadData(tab);
+        };
+
+        async function loadData(type) {
+            const tbody = document.getElementById(type === 'deposit' ? 'tbodyDeposit' : 'tbodyWithdraw');
+            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Memuat data...</td></tr>';
+
+            try {
+                const q = query(collection(db, type === 'deposit' ? "deposits" : "withdrawals"), where("status", "==", "Pending"));
+                const querySnapshot = await getDocs(q);
+                
+                tbody.innerHTML = ''; 
+
+                if (querySnapshot.empty) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Tidak ada data pending.</td></tr>';
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const tr = document.createElement('tr');
+                    
+                    let dateStr = "Baru saja";
+                    if (data.tanggal) {
+                        dateStr = new Date(data.tanggal.toDate()).toLocaleString('id-ID');
+                    }
+
+                    tr.innerHTML = `
+                        <td>${dateStr}</td>
+                        <td>${data.username || data.uid}</td>
+                        <td style="color:#FFD700; font-weight:bold;">Rp ${data.nominal.toLocaleString('id-ID')}</td>
+                        <td>
+                            <button class="btn-action-admin btn-success" onclick="konfirmasiTransaksi('${type}', '${docSnap.id}', '${data.uid}', ${data.nominal})">Setujui</button>
+                            <button class="btn-action-admin btn-danger" onclick="tolakTransaksi('${type}', '${docSnap.id}')">Tolak</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (error) {
+                // MENAMPILKAN PESAN ERROR SPESIFIK DI TABEL
+                console.error("Error loading data: ", error);
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color:red;">
+                    Gagal memuat: ${error.message}<br>
+                    <small>Pastikan Firebase Rules sudah diizinkan untuk dibaca (allow read: if true;).</small>
+                </td></tr>`;
+            }
+        }
+
+        window.konfirmasiTransaksi = async function(type, docId, userId, nominal) {
+            if (!confirm(`Setujui ${type} sebesar Rp ${nominal.toLocaleString('id-ID')}?`)) return;
+
+            try {
+                const collectionName = type === 'deposit' ? "deposits" : "withdrawals";
+                const transRef = doc(db, collectionName, docId);
+                await updateDoc(transRef, { status: "Success" });
+
+                if (type === 'deposit') {
+                    const userRef = doc(db, "users", userId);
+                    await updateDoc(userRef, { saldo: increment(nominal) });
+                    alert("Deposit disetujui! Saldo user ditambahkan.");
+                } else {
+                    alert("Withdraw disetujui!");
+                }
+                loadData(type);
+            } catch (error) {
+                alert("Gagal memproses: " + error.message);
+            }
+        };
+
+        window.tolakTransaksi = async function(type, docId) {
+            if (!confirm(`Tolak ${type} ini?`)) return;
+            try {
+                const collectionName = type === 'deposit' ? "deposits" : "withdrawals";
+                const transRef = doc(db, collectionName, docId);
+                await updateDoc(transRef, { status: "Rejected" });
+                alert("Transaksi ditolak.");
+                loadData(type);
+            } catch (error) {
+                alert("Gagal menolak: " + error.message);
+            }
+        };
+    </script>
+</body>
+</html>

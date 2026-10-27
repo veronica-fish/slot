@@ -1,0 +1,139 @@
+/* Reset & Font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* TEMA WARNA: MERAH, EMAS, HITAM */
+body {
+    background-color: #0a0000; 
+    background-image: linear-gradient(180deg, #1f0000 0%, #0a0000 100%);
+    color: #ffffff; 
+    padding-top: 75px; 
+    padding-bottom: 70px; 
+    overflow-x: hidden;
+}
+
+/* ================= CSS MENU SAMPING ================= */
+.menu-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); z-index: 1500;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out;
+}
+.menu-overlay.active { opacity: 1; visibility: visible; }
+
+.side-menu {
+    position: fixed; top: 0; right: -100%; width: 80%; max-width: 350px; height: 100vh;
+    background-color: #f0f0f0; z-index: 2000;
+    transition: right 0.3s ease-in-out; display: flex; flex-direction: column;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5); 
+}
+.side-menu.active { right: 0; }
+
+.menu-top { background-color: #222; padding: 20px; color: white; position: relative; }
+.close-btn-wrapper { text-align: right; margin-bottom: 10px; }
+.btn-close {
+    background-color: #e0e0e0; color: #333; border: none; border-radius: 50%;
+    width: 35px; height: 35px; font-size: 18px; display: inline-flex;
+    justify-content: center; align-items: center; cursor: pointer;
+}
+
+/* Guest */
+.welcome-text { text-align: center; margin-bottom: 20px; }
+.welcome-text h2 { font-size: 20px; margin-bottom: 5px; color: #fff; }
+.welcome-text p { font-size: 14px; color: #ddd; }
+.auth-buttons { display: flex; gap: 10px; margin-bottom: 20px; }
+.btn-masuk { flex: 1; background-color: #FFD700; color: #000; border: none; padding: 12px 0; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; }
+.btn-daftar { flex: 1; background-color: #cc0000; color: #fff; border: none; padding: 12px 0; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer; }
+
+/* Member */
+.menu-actions { display: flex; gap: 10px; margin-bottom: 20px; }
+.btn-menu-deposit { background: transparent; border: 1px solid #28a745; color: #28a745; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; flex: 1; }
+.btn-menu-withdraw { background: transparent; border: 1px solid #dc3545; color: #dc3545; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; flex: 1; }
+.menu-greeting { text-align: center; font-size: 18px; margin-bottom: 15px; margin-top: 10px; }
+.menu-balance { background-color: #e0e0e0; color: #333; padding: 12px 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 18px; font-weight: bold; }
+
+/* List Menu */
+.menu-bottom { flex: 1; overflow-y: auto; padding: 10px 0; background-color: #f0f0f0; }
+.menu-item { display: flex; align-items: center; padding: 15px 20px; color: #333; text-decoration: none; font-size: 16px; border-bottom: 1px solid #ddd; }
+.menu-item i { width: 30px; font-size: 20px; color: #555; margin-right: 15px; }
+.menu-item:active { background-color: #e0e0e0; }
+.badge-baru { background-color: #ff4757; color: white; font-size: 11px; padding: 3px 8px; border-radius: 10px; margin-left: 10px; font-weight: bold; }
+.language-item { display: flex; justify-content: space-between; }
+.lang-select { padding: 5px; border-radius: 5px; border: 1px solid #ccc; background-color: white; font-size: 14px; width: 60%; outline: none; }
+
+/* HEADER UTAMA */
+.top-header { position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: center; align-items: center; padding: 0; background-color: #000000; height: 75px; border-bottom: 1px solid #cc0000; z-index: 1000; }
+.logo-area img { height: 50px; width: auto; max-width: 200px; object-fit: contain; display: block; }
+.menu-btn { position: absolute; right: 15px; background-color: #1a1a1a; padding: 8px 12px; border-radius: 5px; cursor: pointer; color: #FFD700; z-index: 10; }
+
+/* MARQUEE */
+.marquee-container { display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; color: #cc0000; padding: 8px 15px; font-size: 14px; font-weight: bold; overflow: hidden; }
+.marquee-text { white-space: nowrap; animation: scrollText 15s linear infinite; }
+.arrow-right { color: #cc0000; font-size: 14px; }
+@keyframes scrollText { 0% { transform: translateX(10%); } 100% { transform: translateX(-100%); } }
+
+/* BANNER CAROUSEL */
+.banner-carousel { position: relative; width: 100%; overflow: hidden; background-color: #000; min-height: 200px; display: flex; align-items: center; }
+.banner-img { width: 100%; height: auto; display: block; transition: opacity 0.3s ease-in-out; }
+.nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.4); color: #fff; border: none; width: 35px; height: 60px; font-size: 20px; cursor: pointer; z-index: 10; border-radius: 5px; display: flex; justify-content: center; align-items: center; }
+.prev-btn { left: 10px; } .next-btn { right: 10px; }
+
+/* TOMBOL AKSI */
+.guest-buttons { display: flex; width: 100%; margin: 0; padding: 0; }
+.btn-guest-masuk { flex: 1; background-color: #FFD700; color: #000; border: none; padding: 18px 0; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; border-right: 1px solid #d4af37; }
+.btn-guest-daftar { flex: 1; background-color: #cc0000; color: #fff; border: none; padding: 18px 0; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; }
+.action-buttons { display: flex; justify-content: space-between; padding: 15px; gap: 10px; }
+.btn-yellow { flex: 1; background-color: #FFD700; color: #cc0000; border: none; padding: 12px 0; font-size: 15px; font-weight: 900; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
+
+/* KATEGORI */
+.category-section { display: flex; align-items: center; background-color: #1a1a1a; margin: 15px; border-radius: 10px; padding: 8px 0; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.5); border: 1px solid #333; }
+.category-scroll { display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 20px; padding: 0 10px; width: 100%; scrollbar-width: none; -ms-overflow-style: none; }
+.category-scroll::-webkit-scrollbar { display: none; }
+.cat-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #ffffff; cursor: pointer; min-width: 65px; position: relative; }
+.cat-icon { font-size: 24px; margin-bottom: 5px; position: relative; height: 30px; display: flex; align-items: center; justify-content: center; }
+.cat-item span { font-size: 10px; text-align: center; white-space: nowrap; }
+.arrow-btn { font-size: 16px; color: #ffffff; padding: 10px 8px; cursor: pointer; z-index: 10; user-select: none; }
+.arrow-btn:active { color: #FFD700; }
+.promo-badge { position: absolute; top: -12px; right: -20px; background-color: #d32f2f; color: #ffffff; font-size: 7px; font-weight: bold; padding: 2px 4px; border-radius: 3px; transform: rotate(-10deg); box-shadow: 0 2px 4px rgba(0,0,0,0.5); letter-spacing: 0.5px; }
+
+/* PAPAN PERINGKAT */
+.leaderboard-container { background-color: #2a2a2a; margin: 15px; border-radius: 10px; border: 1px solid #FFD700; overflow: hidden; }
+.leaderboard-header { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #444; }
+.leaderboard-header h3 { font-size: 16px; color: #fff; display: flex; align-items: center; gap: 10px; }
+.btn-blue { background-color: #007bff; color: #fff; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+.leaderboard-list { display: flex; flex-direction: column; }
+.lb-row { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #333; font-size: 14px; }
+.lb-row:last-child { border-bottom: none; }
+.lb-row span:nth-child(1) { flex: 1; color: #fff; }
+.lb-row span:nth-child(2) { flex: 1; text-align: center; color: #ccc; }
+.lb-row span:nth-child(3) { flex: 1; text-align: right; color: #FFD700; }
+
+/* PROGRESSIVE JACKPOT */
+.progressive-jackpot { margin: 15px; background-color: #000; border: 4px dotted #cc0000; border-radius: 10px; padding: 20px 10px; text-align: center; position: relative; }
+.pj-label { background: linear-gradient(to bottom, #444, #222); color: #fff; padding: 5px 15px; border-radius: 5px; font-size: 12px; font-weight: bold; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); border: 1px solid #666; }
+.pj-amount { font-size: 28px; font-weight: bold; color: #fff; margin-top: 10px; }
+
+/* METODE PEMBAYARAN */
+.payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+.pay-btn { background: linear-gradient(to bottom, #cc0000, #800000); color: #fff; border: 1px solid #FFD700; border-radius: 8px; padding: 12px 5px; font-size: 12px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3); text-shadow: 1px 1px 2px #000; }
+.pay-btn:active { transform: translateY(2px); box-shadow: 0 2px 3px rgba(0,0,0,0.5); }
+
+/* FOOTER LOGO */
+.footer-logo { text-align: center; padding: 20px; display: flex; justify-content: center; align-items: center; }
+.footer-logo img { max-width: 150px; height: auto; display: block; }
+
+/* ARTIKEL SEO */
+.seo-article { padding: 20px 15px; line-height: 1.6; }
+.certificate-container { width: 100%; margin-bottom: 20px; }
+.cert-img { width: 100%; height: auto; border-radius: 10px; border: 2px solid #FFD700; }
+.seo-article h2 { font-size: 18px; color: #ffffff; text-align: center; margin-bottom: 20px; }
+.seo-article p { font-size: 13px; color: #cccccc; margin-bottom: 15px; text-align: justify; }
+
+/* BOTTOM NAVIGATION */
+.bottom-nav { position: fixed; bottom: 0; width: 100%; background-color: #0a0000; display: flex; justify-content: space-around; align-items: center; padding: 8px 0; border-top: 1px solid #330000; z-index: 1000; }
+.nav-item { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: #aaa; cursor: pointer; }
+.nav-item i { font-size: 20px; margin-bottom: 3px; }
+.nav-item.active { color: #FFD700; font-weight: bold; }

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - NUSA138</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .login-container { background-color: rgba(20, 0, 0, 0.8); margin: 15px; border-radius: 10px; overflow: hidden; border: 1px solid #330000; margin-top: 20px; }
+        .login-body { padding: 20px 15px; }
+        .login-title { color: #ffffff; font-size: 16px; margin-bottom: 15px; text-align: left; }
+        .form-group { margin-bottom: 15px; position: relative; }
+        .form-control { width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background-color: #fff; color: #333; outline: none; }
+        .password-wrapper { position: relative; display: flex; align-items: center; }
+        .password-wrapper input { padding-right: 40px; }
+        .toggle-password { position: absolute; right: 15px; color: #555; cursor: pointer; font-size: 18px; }
+        .captcha-group { display: flex; align-items: center; gap: 10px; }
+        .captcha-group input { flex: 1; }
+        .captcha-img { width: 110px; height: 48px; background-color: #111; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 22px; letter-spacing: 3px; color: #fff; border-radius: 5px; font-family: monospace; user-select: none; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px); border: 2px solid #fff; }
+        .refresh-captcha { font-size: 26px; color: #fff; cursor: pointer; transition: transform 0.3s; }
+        .refresh-captcha:active { transform: rotate(180deg); }
+        .btn-submit { width: 100%; padding: 15px; background: linear-gradient(to bottom, #f0f0f0, #b0b0b0); border: 1px solid #888; border-radius: 5px; font-size: 16px; font-weight: bold; color: #333; cursor: pointer; margin-top: 5px; text-transform: uppercase; }
+        .btn-submit:active { background: #ccc; }
+        .divider { display: flex; align-items: center; text-align: center; color: #ddd; margin: 25px 0; font-size: 14px; }
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid #555; }
+        .divider::before { margin-right: 15px; }
+        .divider::after { margin-left: 15px; }
+        .join-text { color: #ffffff; font-size: 14px; margin-bottom: 10px; }
+        .btn-join { width: 100%; padding: 15px; background: linear-gradient(to bottom, #f0f0f0, #b0b0b0); border: 1px solid #888; border-radius: 5px; font-size: 16px; font-weight: bold; color: #333; cursor: pointer; text-transform: uppercase; }
+        .btn-join:active { background: #ccc; }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="logo-area">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/logo.png" alt="Nusa138 Logo">
+        </div>
+        <div class="menu-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <div class="login-container">
+        <div class="login-body">
+            <div class="login-title">Silahkan masuk</div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <input type="text" id="loginUsername" class="form-control" placeholder="Nama Pengguna" required>
+                </div>
+
+                <div class="form-group password-wrapper">
+                    <input type="password" id="loginPassword" class="form-control" placeholder="Kata Sandi" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword()" id="eyeIcon"></i>
+                </div>
+
+                <div class="form-group captcha-group">
+                    <input type="text" id="loginCaptchaInput" class="form-control" placeholder="Captcha" required style="text-transform: uppercase;">
+                    <div class="captcha-img" id="loginCaptchaDisplay">ABCD</div>
+                    <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()"></i>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btnMasuk">MASUK</button>
+            </form>
+
+            <div class="divider">Klik disini untuk menjadi anggota</div>
+            <div class="join-text"></div>
+            <button class="btn-join" onclick="window.location.href='daftar.html'">GABUNG SEKARANG</button>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="window.location.href='index.html'"><i class="fas fa-chevron-left"></i><span>Kembali</span></div>
+        <div class="nav-item"><i class="fas fa-file-invoice-dollar"></i><span>Akun Saya</span></div>
+        <div class="nav-item" onclick="window.location.href='promosi.html'"><i class="fas fa-gift"></i><span>Promosi</span></div>
+        <div class="nav-item"><i class="fas fa-comment-dots"></i><span>Live Chat</span></div>
+        <div class="nav-item active" onclick="window.location.href='index.html'"><i class="fas fa-home"></i><span>Beranda</span></div>
+    </nav>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDscvQx58W-53wXjzKgyOz9cfjQkA3LZI",
+            authDomain: "nusa138-2745d.firebaseapp.com",
+            projectId: "nusa138-2745d",
+            storageBucket: "nusa138-2745d.firebasestorage.app",
+            messagingSenderId: "664945100438",
+            appId: "1:664945100438:web:497f069d45216d9b62e4b7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        setPersistence(auth, browserSessionPersistence);
+
+        window.togglePassword = function() {
+            const input = document.getElementById("loginPassword");
+            const icon = document.getElementById("eyeIcon");
+            if (input.type === "password") { input.type = "text"; icon.classList.replace("fa-eye", "fa-eye-slash"); } 
+            else { input.type = "password"; icon.classList.replace("fa-eye-slash", "fa-eye"); }
+        }
+
+        let currentCaptchaCode = "";
+        window.generateCaptcha = function() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let result = "";
+            for (let i = 0; i < 4; i++) { result += chars.charAt(Math.floor(Math.random() * chars.length)); }
+            currentCaptchaCode = result;
+            document.getElementById("loginCaptchaDisplay").innerText = result;
+            document.getElementById("loginCaptchaInput").value = ""; 
+        }
+        window.onload = generateCaptcha;
+
+        window.handleLogin = async function(event) {
+            event.preventDefault(); 
+            const username = document.getElementById("loginUsername").value;
+            const password = document.getElementById("loginPassword").value;
+            const captchaInput = document.getElementById("loginCaptchaInput").value.toUpperCase();
+            const btnSubmit = document.getElementById('btnMasuk');
+
+            if (captchaInput !== currentCaptchaCode) { alert("Login Gagal: Kode Captcha salah!"); generateCaptcha(); return; }
+
+            const fakeEmail = username + "@nusa138.com";
+            btnSubmit.innerText = "MEMPROSES...";
+            btnSubmit.disabled = true;
+
+            try {
+                await signInWithEmailAndPassword(auth, fakeEmail, password);
+                alert("Login Berhasil! Selamat datang, " + username);
+                
+                localStorage.setItem('currentUser', username);
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                window.location.href = "index.html";
+            } catch (error) {
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    alert("Login Gagal: Nama Pengguna atau Kata Sandi salah!");
+                } else {
+                    alert("Terjadi kesalahan: " + error.message);
+                }
+                generateCaptcha();
+            } finally {
+                btnSubmit.innerText = "MASUK";
+                btnSubmit.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

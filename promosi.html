@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promosi - NUSA138</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .promo-header-title {
+            text-align: center;
+            color: #ffffff;
+            font-size: 18px;
+            padding: 15px 0;
+            background-color: #1a1a1a;
+            border-bottom: 1px solid #333;
+        }
+
+        .promo-list {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background-color: #0a1c12; 
+            background-image: linear-gradient(180deg, #0a1c12 0%, #051009 100%);
+            min-height: 100vh;
+        }
+
+        .promo-item {
+            background-color: #112d17;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .promo-item:active {
+            transform: scale(0.98); 
+        }
+
+        .promo-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .promo-item-title {
+            padding: 15px;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-top: 1px solid #1f4a2a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <div class="logo-area">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/logo.png" alt="Nusa138 Logo">
+        </div>
+        <div class="menu-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <!-- JUDUL HALAMAN -->
+    <div class="promo-header-title">
+        Promosi
+    </div>
+
+    <!-- DAFTAR PROMO -->
+    <div class="promo-list">
+        
+        <!-- 1. BONUS MINGGUAN -->
+        <div class="promo-item" onclick="window.location.href='promo-detail.html?id=mingguan'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/banner1.png" alt="Bonus Mingguan">
+            <div class="promo-item-title">BONUS MINGGUAN</div>
+        </div>
+
+        <!-- 2. EVENT WHEEL SPIN -->
+        <div class="promo-item" onclick="window.location.href='promo-detail.html?id=wheelspin'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/banner2.png" alt="Event Wheel Spin">
+            <div class="promo-item-title">EVENT WHEEL SPIN</div>
+        </div>
+
+        <!-- 3. EVENT MYSTERY BOX -->
+        <div class="promo-item" onclick="window.location.href='promo-detail.html?id=mystery'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/box.png" alt="Event Mystery Box">
+            <div class="promo-item-title">EVENT MYSTERY BOX</div>
+        </div>
+
+        <!-- 4. BONUS HARIAN -->
+        <div class="promo-item" onclick="window.location.href='promo-detail.html?id=harian'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/harian.png" alt="Bonus Harian">
+            <div class="promo-item-title">BONUS HARIAN</div>
+        </div>
+
+        <!-- 5. NUSA138 REFERRAL -->
+        <div class="promo-item" onclick="window.location.href='promo-detail.html?id=referral'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/referral.png" alt="Nusa138 Referral">
+            <div class="promo-item-title">NUSA138 REFERRAL</div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-chevron-left"></i>
+            <span>Kembali</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='withdraw.html?tab=deposit'">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Akun Saya</span>
+        </div>
+        <div class="nav-item active">
+            <i class="fas fa-gift"></i>
+            <span>Promosi</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-comment-dots"></i>
+            <span>Live Chat</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </div>
+    </nav>
+
+</body>
+</html>

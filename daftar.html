@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Akun - NUSA138</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .form-container { background-color: rgba(20, 0, 0, 0.8); margin: 15px; border-radius: 10px; overflow: hidden; border: 1px solid #330000; margin-bottom: 80px; }
+        .form-header { background: linear-gradient(to right, #800000, #cc0000); color: #FFD700; padding: 15px; text-align: center; font-size: 18px; font-weight: bold; position: relative; border-bottom: 2px solid #FFD700; }
+        .form-header .close-btn { position: absolute; right: 0; top: 0; height: 100%; width: 50px; background-color: rgba(0,0,0,0.3); color: white; display: flex; justify-content: center; align-items: center; font-size: 20px; text-decoration: none; }
+        .form-body { padding: 20px 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 14px; color: #fff; margin-bottom: 5px; }
+        .form-group label span { color: #ff3333; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; background-color: #fff; color: #333; outline: none; }
+        .input-group { display: flex; gap: 10px; }
+        .input-group .form-control { flex: 1; }
+        .btn-show-pass { background: linear-gradient(to bottom, #f0f0f0, #ccc); border: 1px solid #999; border-radius: 5px; padding: 0 15px; font-size: 12px; font-weight: bold; color: #333; cursor: pointer; }
+        .section-title { background: linear-gradient(to right, #b8860b, #daa520); color: #000; text-align: center; padding: 10px; font-weight: bold; margin: 20px 0 15px 0; border-radius: 5px; font-size: 14px; letter-spacing: 1px; }
+        .captcha-group { display: flex; align-items: center; gap: 10px; }
+        .captcha-img { width: 120px; height: 45px; background-color: #ddd; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 22px; letter-spacing: 5px; color: #333; border-radius: 5px; font-family: monospace; user-select: none; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px); }
+        .refresh-captcha { font-size: 24px; color: #fff; cursor: pointer; transition: transform 0.3s; }
+        .refresh-captcha:active { transform: rotate(180deg); }
+        .btn-submit { width: 100%; padding: 15px; background: linear-gradient(to bottom, #e0e0e0, #b0b0b0); border: 1px solid #888; border-radius: 5px; font-size: 16px; font-weight: bold; color: #333; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+        .btn-submit:active { background: #ccc; }
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="logo-area">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/logo.png" alt="Nusa138 Logo">
+        </div>
+        <div class="menu-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <div class="form-header">
+            Registrasi Anggota
+            <a href="index.html" class="close-btn"><i class="fas fa-times"></i></a>
+        </div>
+        
+        <div class="form-body">
+            <form id="registerForm" onsubmit="validateForm(event)">
+                <div class="form-group">
+                    <label>Nama Pengguna <span>*</span></label>
+                    <input type="text" id="username" class="form-control" placeholder="Huruf dan angka (5-16 karakter)" pattern="^[a-zA-Z0-9]{5,16}$" title="Hanya huruf dan angka, 5 sampai 16 karakter" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Kata Sandi <span>*</span></label>
+                    <div class="input-group">
+                        <input type="password" id="password" class="form-control" placeholder="Antara 6 dan 16 karakter" pattern=".{6,16}" title="6 sampai 16 karakter" required>
+                        <button type="button" class="btn-show-pass" onclick="togglePassword('password', this)">PERLIHATKAN</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Konfirmasi Sandi <span>*</span></label>
+                    <div class="input-group">
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Ulangi Kata Sandi" pattern=".{6,16}" required>
+                        <button type="button" class="btn-show-pass" onclick="togglePassword('confirmPassword', this)">PERLIHATKAN</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Lengkap <span>*</span></label>
+                    <input type="text" class="form-control" placeholder="Sesuai KTP (Hanya huruf)" pattern="^[a-zA-Z\s]+$" title="Hanya huruf dan spasi" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nomor Telepon <span>*</span></label>
+                    <div class="input-group">
+                        <select style="width: 80px; padding: 12px; border-radius: 5px; border: 1px solid #ccc; background-color: #f0f0f0;">
+                            <option>+62</option>
+                        </select>
+                        <input type="tel" class="form-control" placeholder="81261xxx" pattern="^[0-9]{10,14}$" title="10 sampai 14 digit angka" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Kode Referral <span style="color:#888;">(Opsional)</span></label>
+                    <input type="text" class="form-control">
+                </div>
+
+                <div class="section-title">REKENING BANK</div>
+
+                <div class="form-group">
+                    <label>Nama Bank <span>*</span></label>
+                    <select id="bankSelect" class="form-control" required>
+                        <option value="">-- Pilih Bank / E-Wallet --</option>
+                        <option value="QRIS">QRIS</option>
+                        <option value="BCA">BCA</option>
+                        <option value="mandiri">mandiri</option>
+                        <option value="CIMB NIAGA">CIMB NIAGA</option>
+                        <option value="BNI">BNI</option>
+                        <option value="BANK BRI">BANK BRI</option>
+                        <option value="Danamon">Danamon</option>
+                        <option value="PermataBank">PermataBank</option>
+                        <option value="OVO">OVO</option>
+                        <option value="gopay">gopay</option>
+                        <option value="XL">XL</option>
+                        <option value="Telkomsel">Telkomsel</option>
+                        <option value="DANA">DANA</option>
+                        <option value="PaninBank">PaninBank</option>
+                        <option value="LinkAja">LinkAja</option>
+                        <option value="Sakuku">Sakuku</option>
+                        <option value="jenius">jenius</option>
+                        <option value="BNC">BNC</option>
+                        <option value="Jago">Jago</option>
+                        <option value="sinarmas">sinarmas</option>
+                        <option value="allobank">allobank</option>
+                        <option value="blu">blu</option>
+                        <option value="SeaBank">SeaBank</option>
+                        <option value="OCBC">OCBC</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Nomor Rekening Bank <span>*</span></label>
+                    <input type="text" id="noRek" inputmode="numeric" class="form-control" pattern="^[0-9]+$" title="Hanya angka" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Rekening <span>*</span></label>
+                    <input type="text" id="namaRek" class="form-control" pattern="^[a-zA-Z\s]+$" title="Hanya huruf dan spasi" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Captcha <span>*</span></label>
+                    <div class="captcha-group">
+                        <input type="text" id="captchaInput" class="form-control" placeholder="Ketik kode captcha" required style="max-width: 150px; text-transform: uppercase;">
+                        <div class="captcha-img" id="captchaDisplay">ABCD</div>
+                        <i class="fas fa-sync-alt refresh-captcha" onclick="generateCaptcha()"></i>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btnDaftar">BUAT AKUN</button>
+            </form>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="window.location.href='index.html'"><i class="fas fa-chevron-left"></i><span>Kembali</span></div>
+        <div class="nav-item"><i class="fas fa-file-invoice-dollar"></i><span>Akun Saya</span></div>
+        <div class="nav-item" onclick="window.location.href='promosi.html'"><i class="fas fa-gift"></i><span>Promosi</span></div>
+        <div class="nav-item"><i class="fas fa-comment-dots"></i><span>Live Chat</span></div>
+        <div class="nav-item active" onclick="window.location.href='index.html'"><i class="fas fa-home"></i><span>Beranda</span></div>
+    </nav>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCDscvQx58W-53wXjzKgyOz9cfjQkA3LZI",
+            authDomain: "nusa138-2745d.firebaseapp.com",
+            projectId: "nusa138-2745d",
+            storageBucket: "nusa138-2745d.firebasestorage.app",
+            messagingSenderId: "664945100438",
+            appId: "1:664945100438:web:497f069d45216d9b62e4b7"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        window.togglePassword = function(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") { input.type = "text"; btn.innerText = "SEMBUNYIKAN"; } 
+            else { input.type = "password"; btn.innerText = "PERLIHATKAN"; }
+        }
+
+        let currentCaptchaCode = "";
+        window.generateCaptcha = function() {
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let result = "";
+            for (let i = 0; i < 4; i++) { result += chars.charAt(Math.floor(Math.random() * chars.length)); }
+            currentCaptchaCode = result;
+            document.getElementById("captchaDisplay").innerText = result;
+            document.getElementById("captchaInput").value = ""; 
+        }
+        window.onload = generateCaptcha;
+
+        window.validateForm = async function(event) {
+            event.preventDefault(); 
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const captchaInput = document.getElementById("captchaInput").value.toUpperCase();
+            const btnSubmit = document.getElementById('btnDaftar');
+
+            const bank = document.getElementById("bankSelect").value;
+            const noRek = document.getElementById("noRek").value;
+            const namaRek = document.getElementById("namaRek").value;
+
+            if (password !== confirmPassword) { alert("Pendaftaran Gagal: Konfirmasi Sandi tidak cocok!"); return; }
+            if (captchaInput !== currentCaptchaCode) { alert("Pendaftaran Gagal: Kode Captcha salah!"); generateCaptcha(); return; }
+
+            btnSubmit.innerText = "MEMPROSES...";
+            btnSubmit.disabled = true;
+            const fakeEmail = username + "@nusa138.com";
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, fakeEmail, password);
+                const user = userCredential.user;
+
+                await setDoc(doc(db, "users", user.uid), {
+                    username: username,
+                    email: fakeEmail,
+                    bank: bank,
+                    noRek: noRek,
+                    namaRek: namaRek,
+                    saldo: 0,
+                    createdAt: new Date()
+                });
+
+                alert("Pendaftaran Berhasil! Silakan Login.");
+                window.location.href = "masuk.html";
+            } catch (error) {
+                if (error.code === 'auth/email-already-in-use') {
+                    alert("Nama Pengguna sudah terdaftar! Silakan gunakan Nama Pengguna lain.");
+                } else {
+                    alert("Terjadi kesalahan: " + error.message);
+                }
+                generateCaptcha();
+            } finally {
+                btnSubmit.innerText = "BUAT AKUN";
+                btnSubmit.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
