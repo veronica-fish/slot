@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PS Games - NUSA138</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Khusus Halaman Game PS */
+        body { background-color: #051009; background-image: none; padding-top: 75px; padding-bottom: 70px; }
+        
+        /* Header */
+        .top-header {
+            position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: center;
+            align-items: center; padding: 0; background-color: #000000; height: 75px;
+            border-bottom: 1px solid #333; z-index: 1000;
+        }
+        .logo-area img { height: 50px; width: auto; max-width: 200px; object-fit: contain; display: block; }
+        .menu-btn {
+            position: absolute; right: 15px; background-color: #1a1a1a; padding: 8px 12px;
+            border-radius: 5px; cursor: pointer; color: #FFD700; z-index: 10;
+        }
+
+        /* Judul Halaman */
+        .page-title {
+            text-align: center; color: #FFD700; font-size: 18px; font-weight: bold;
+            padding: 15px 0; border-bottom: 1px solid #333; text-transform: uppercase;
+        }
+
+        /* Grid Game */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 Kolom */
+            gap: 10px;
+            padding: 15px;
+            margin-bottom: 80px;
+        }
+
+        .game-card {
+            background: #222;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid #333;
+            transition: transform 0.2s, border-color 0.2s;
+            aspect-ratio: 3 / 4; 
+        }
+
+        .game-card:active { transform: scale(0.95); border-color: #FFD700; }
+
+        .game-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Tombol Scroll Ke Atas */
+        .scroll-top-btn {
+            position: fixed; bottom: 80px; right: 15px; width: 45px; height: 45px;
+            background-color: rgba(100, 100, 100, 0.8); color: white; border-radius: 8px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            font-size: 11px; cursor: pointer; z-index: 99; border: 1px solid #777;
+        }
+        .scroll-top-btn i { font-size: 16px; margin-bottom: 2px; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <div class="logo-area">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/logo.png" alt="Nusa138 Logo">
+        </div>
+        <div class="menu-btn" onclick="window.location.href='slot.html'">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+    </header>
+
+    <!-- JUDUL -->
+    <div class="page-title">PS Games</div>
+
+    <!-- GRID GAME -->
+    <div class="game-grid">
+        
+        <!-- BARIS 1 -->
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/MahjongOrigin.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Mahjong Origin" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/MahjongWays3+PS.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Mahjong Ways 3+ PS" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/Nord2Winter.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Nord 2 Winter" class="game-img">
+        </div>
+
+        <!-- BARIS 2 -->
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/MahjongOrigin2.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Mahjong Origin 2" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/ZeusOfOlympus.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Zeus Of Olympus" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/MahjongWays3PS.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Mahjong Ways 3 PS" class="game-img">
+        </div>
+
+        <!-- BARIS 3 -->
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/TreasureOfAztec.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Treasure Of Aztec" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/SugarBoom.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Sugar Boom" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/LuckyAce.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Lucky Ace" class="game-img">
+        </div>
+
+        <!-- BARIS 4 -->
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/Mahjong-Ways3.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Mahjong Ways 3" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/SuperAwesome.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Super Awesome" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/WhatTheFA.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="What The FA" class="game-img">
+        </div>
+
+        <!-- BARIS 5 -->
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/SuperWin.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Super Win" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/SuperBoom.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Super Boom" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/SuperPowerfull.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Super Powerfull" class="game-img">
+        </div>
+
+        <!-- BARIS 6 -->
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/SuperRich.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Super Rich" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/FortuneTeller.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="Fortune Teller" class="game-img">
+        </div>
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/TheEmpire.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="The Empire" class="game-img">
+        </div>
+
+        <!-- BARIS 7 -->
+        <div class="game-card" onclick="window.location.href='game.html'">
+            <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/img/777.webp" onerror="this.src='https://via.placeholder.com/165x220/333/fff?text=No+Image'" alt="777" class="game-img">
+        </div>
+
+    </div>
+
+    <!-- Tombol Ke Atas -->
+    <div class="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        <i class="fas fa-chevron-up"></i>
+        <span>Atas</span>
+    </div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav">
+        <div class="nav-item" onclick="window.location.href='slot.html'">
+            <i class="fas fa-chevron-left"></i><span>Kembali</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='withdraw.html?tab=deposit'">
+            <i class="fas fa-file-invoice-dollar"></i><span>Akun Saya</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='promosi.html'">
+            <i class="fas fa-gift"></i><span>Promosi</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-comment-dots"></i><span>Live Chat</span>
+        </div>
+        <div class="nav-item active" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i><span>Beranda</span>
+        </div>
+    </nav>
+
+</body>
+</html>
