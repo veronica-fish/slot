@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Memuat Game...</title>
+    <style>
+        body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #000; overflow: hidden; }
+        .game-wrapper { position: relative; width: 100%; height: 100%; max-width: 100%; max-height: 100vh; overflow: hidden; }
+        iframe { border: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="game-wrapper">
+        <iframe id="gameFrame" src="" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        // Mengambil parameter dari URL (contoh: game-pg.html?game=mahjong)
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = urlParams.get('game');
+        
+        const iframe = document.getElementById('gameFrame');
+
+        // DAFTAR SEMUA LINK GAME PG SOFT
+        const gameLinks = {
+            'mahjong': 'https://m.501ytxk3a.com/65/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=25zoh%3Dt45nvt68%3Dbnl&or=08abibqk%3D501gbfs3i%3Dkwu&__hv=2fMEUCIQDCCuNTsfJtLlSQ%2FcgAfgZ104to6mTheyjIciq5RXkYkQIgU6PrK54lU3%2FOarwc3OfyWeRd4QzCKkIOWT%2F5I8xRd50%3D&__sv=010601Sjxk7LDVhoQAtlmN1fTBQLATx2H-7DGyx_ROfCFxeUg',
+            'mahjong2': 'https://m.9ffyu1g9c.com/74/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=15pex%3Dj45dlj68d%3Drdb&or=19lmtmbv%3Do2drn1dck%3Dvhf&__hv=2fMEUCID4wnsuERWLkq3vwqZTYuK9aWEhglZxJIjgypvzPYt8HAiEAu%2B7YtUzFvlAN1xw%2BeHpC1K8fxxPrgl1%2FqMuuQTzU38A%3D',
+            'wild-bounty': 'https://m.9ffyu1g9c.com/135/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=06gvo%3D6izayrcwf%3Dius&or=20mnuncw%3Dp2eso1edl%3Dwig&__hv=2fMEUCID4wnsuERWLkq3vwqZTYuK9aWEhglZxJIjgypvzPYt8HAiEAu%2B7YtUzFvlAN1xw%2BeHpC1K8fxxPrgl1%2FqMuuQTzU38A%3D',
+            'wild-bandito': 'https://m.5egytucuw.com/104/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=08ixq%3Dbsxcark86%3Dkwu&or=11deletn%3D5prjefnfh%3Dnzx&__hv=2fMEUCIQCWEvHflMN3vTEyyUk86JB2dfi0vHzqWdjy9daef5bfFQIgRZ%2Fn%2FJptS86ATcok4ZO1jqvmDeGupYinKAFeEtb9N2k%3D',
+            'lucky-neko': 'https://m.9ffyu1g9c.com/89/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=16qfy%3Djafkizs86%3Dsec&or=17jkrkzt%3Dm2bpl1bai%3Dtfd&__hv=2fMEUCIQDdSQ5%2FTw50Ssp%2BQll9%2BrFC63E4SZrrCMqjCkfAtB%2BNugIgCCYtLZTrCtkP36mzPJi4N%2FiWSpWxmqyl0MjZfcEsjdU%3D',
+            'treasure-aztec': 'https://m.7df5u.com/87/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=25zoh%3Dt45nvt68n%3Dbnl&or=08abibqk%3Dpr2s2%3Dkwu&__hv=2fMEUCICtPwbGnWdFJDV4S9PNcs%2Fx1%2B2RW%2FZwDQHhCrbvL6LD4AiEAz5Cofp80rX7oHpyXD4k8nCFXTjZ2maIGBHq3rSLFHWY%3D&__sv=010201ZVps6prMz_hp10WegYY',
+            'wild-ape': 'https://m.9ffyu1g9c.com/1508783/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=15pex%3Dj45dlj68%3Drdb&or=23pqxqfz%3Ds2hvr1hgo%3Dzlj&__hv=2fMEUCIQDdSQ5%2FTw50Ssp%2BQll9%2BrFC63E4SZrrCMqjCkfAtB%2BNugIgCCYtLZTrCtkP36mzPJi4N%2FiWSpWxmqyl0MjZfcEsjdU%3D',
+            'gemstones-gold': 'https://m.yziyu02by.com/1671262/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=23xmf%3Dr45ltr68l%3Dzlj&or=10cdkdsm%3Dtb5ie01kk%3Dmyw&__hv=2fMEUCIQCx1KL%2FhKMbRpIHdkhOq95Sb7k4Ws%2Fi8lL1SpnIHIgEOgIgJ%2FC4wYYMtIaCMe622qcJ0x62JKVK1dhGNNUtwUYUAyM%3D&__sv=010301Rg1_zKTOpdBmtn6Y08fUT4Mv_UH1n2Wl8eAQXxccd1s',
+            'ways-qilin': 'https://m.7df5u.com/106/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=24yng%3Drinsqha86%3Damk&or=16ijqjys%3Dxz2a2%3Dsec&__hv=2fMEUCICtPwbGnWdFJDV4S9PNcs%2Fx1%2B2RW%2FZwDQHhCrbvL6LD4AiEAz5Cofp80rX7oHpyXD4k8nCFXTjZ2maIGBHq3rSLFHWY%3D&__sv=010201ZVps6prMz_hp10WegYY',
+            'pinata-wins': 'https://m.9ffyu1g9c.com/1492288/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=01bqj%3Dv45pxv68p%3Ddpn&or=08abibqk%3Dd2sgc1srz%3Dkwu&__hv=2fMEUCID4wnsuERWLkq3vwqZTYuK9aWEhglZxJIjgypvzPYt8HAiEAu%2B7YtUzFvlAN1xw%2BeHpC1K8fxxPrgl1%2FqMuuQTzU38A%3D',
+            'anubis-wrath': 'https://m.7df5u.com/1623475/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=19tib%3Dn45hpn68h%3Dvhf&or=18klslau%3Dzb2c2%3Duge&__hv=2fMEUCICtPwbGnWdFJDV4S9PNcs%2Fx1%2B2RW%2FZwDQHhCrbvL6LD4AiEAz5Cofp80rX7oHpyXD4k8nCFXTjZ2maIGBHq3rSLFHWY%3D&__sv=010201ZVps6prMz_hp10WegYY',
+            'mafia-mayhem': 'https://m.9ffyu1g9c.com/1580541/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=14odw%3D6qhigzken%3Dqca&or=06yzgzoi%3Db2qea1qpx%3Dius&__hv=2fMEUCIQDdSQ5%2FTw50Ssp%2BQll9%2BrFC63E4SZrrCMqjCkfAtB%2BNugIgCCYtLZTrCtkP36mzPJi4N%2FiWSpWxmqyl0MjZfcEsjdU%3D',
+            'cocktail-night': 'https://m.5egytucuw.com/117/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=06gvo%3Da45uca68u%3Dius&or=15hipixr%3D5tvnijrjl%3Drdb&__hv=2fMEUCIQD3LFT2YmkuPK3fxYv3A9zGlw2iT0BWPeTx8anpXaxtXgIgKnzRWDCP2KO0mrUMZmcfD%2B8xz%2BMBadKyAoym0nmmOXc%3D',
+            'mr-treasure': 'https://m.501ytxk3a.com/1799745/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=03dsl%3Dx45rzx68r%3Dfrp&or=09bcjcrl%3D501hcgt3j%3Dlxv&__hv=2fMEQCIGImDOkgu3GPJOvaj89sh9bg1gJbewnPhQCc70xaaCCIAiBM9rqG0BwKibt%2BM84%2FWgVvTwEyPLV1QYdo5VLBuQSjUg%3D%3D&__sv=010601Sjxk7LDVhoQAtlmN1fTBQLATx2H-7DGyx_ROfCFxeUg',
+            'dragon-hatch': 'https://m.9ffyu1g9c.com/1451122/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=04etm%3D6gxywpaud%3Dgsq&or=07zahapj%3Dc2rfb1rqy%3Djvt&__hv=2fMEUCID4wnsuERWLkq3vwqZTYuK9aWEhglZxJIjgypvzPYt8HAiEAu%2B7YtUzFvlAN1xw%2BeHpC1K8fxxPrgl1%2FqMuuQTzU38A%3D',
+            'queen-bounty': 'https://m.9ffyu1g9c.com/84/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=03dsl%3Dx45rzx68r%3Dfrp&or=11deletn%3Dg2vjf1vuc%3Dnzx&__hv=2fMEUCIQDdSQ5%2FTw50Ssp%2BQll9%2BrFC63E4SZrrCMqjCkfAtB%2BNugIgCCYtLZTrCtkP36mzPJi4N%2FiWSpWxmqyl0MjZfcEsjdU%3D',
+            'ice-scape': 'https://m.yziyu02by.com/53/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=07hwp%3Db45vdb68v%3Djvt&or=07zahapj%3Dqy5fb01hh%3Djvt&__hv=2fMEQCIGp6V%2FCpL0KVLbnWFXj0cioWIdFHa7hg2f3pGKtzbFktAiBWLYKfgTQEIw4jMmGI9%2BO2IYNPK7%2BTURmUeQmL8g0roA%3D%3D&__sv=010301Rg1_zKTOpdBmtn6Y08fUT4Mv_UH1n2Wl8eAQXxccd1s',
+            'jurassic-kingdom': 'https://m.7df5u.com/110/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=01bqj%3Dv45pxv68p%3Ddpn&or=12efmfuo%3Dtv2w2%3Doay&__hv=2fMEUCICtPwbGnWdFJDV4S9PNcs%2Fx1%2B2RW%2FZwDQHhCrbvL6LD4AiEAz5Cofp80rX7oHpyXD4k8nCFXTjZ2maIGBHq3rSLFHWY%3D&__sv=010201ZVps6prMz_hp10WegYY',
+            'dreams-macau': 'https://m.9ffyu1g9c.com/79/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=11lat%3D6nefdwhbk%3Dnzx&or=14ghohwq%3Dj2ymi1yxf%3Dqca&__hv=2fMEUCIQDdSQ5%2FTw50Ssp%2BQll9%2BrFC63E4SZrrCMqjCkfAtB%2BNugIgCCYtLZTrCtkP36mzPJi4N%2FiWSpWxmqyl0MjZfcEsjdU%3D',
+            'speed-winner': 'https://m.501ytxk3a.com/127/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=06gvo%3Da45uca68u%3Dius&or=25rszshb%3D501xswj3z%3Dbnl&__hv=2fMEQCIGImDOkgu3GPJOvaj89sh9bg1gJbewnPhQCc70xaaCCIAiBM9rqG0BwKibt%2BM84%2FWgVvTwEyPLV1QYdo5VLBuQSjUg%3D%3D&__sv=010601Sjxk7LDVhoQAtlmN1fTBQLATx2H-7DGyx_ROfCFxeUg',
+            'caishen-wins': 'https://m.9ffyu1g9c.com/71/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=03dsl%3Dx45rzx68r%3Dfrp&or=19lmtmbv%3Do2drn1dck%3Dvhf&__hv=2fMEUCIQDdSQ5%2FTw50Ssp%2BQll9%2BrFC63E4SZrrCMqjCkfAtB%2BNugIgCCYtLZTrCtkP36mzPJi4N%2FiWSpWxmqyl0MjZfcEsjdU%3D',
+            'midas-fortune': 'https://m.9ffyu1g9c.com/1402846/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=02crk%3Dw45qyw68q%3Deqo&or=08abibqk%3Dd2sgc1srz%3Dkwu&__hv=2fMEUCIQDdSQ5%2FTw50Ssp%2BQll9%2BrFC63E4SZrrCMqjCkfAtB%2BNugIgCCYtLZTrCtkP36mzPJi4N%2FiWSpWxmqyl0MjZfcEsjdU%3D',
+            'yakuza-honor': 'https://m.yziyu02by.com/1760238/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=01bqj%3Dv45pxv68p%3Ddpn&or=12efmfuo%3Dvd5kg01mm%3Doay&__hv=2fMEUCIQCx1KL%2FhKMbRpIHdkhOq95Sb7k4Ws%2Fi8lL1SpnIHIgEOgIgJ%2FC4wYYMtIaCMe622qcJ0x62JKVK1dhGNNUtwUYUAyM%3D&__sv=010301Rg1_zKTOpdBmtn6Y08fUT4Mv_UH1n2Wl8eAQXxccd1s',
+            'ganesha-fortune': 'https://m.9ffyu1g9c.com/75/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=08ixq%3Dbsxcark86%3Dkwu&or=21novodx%3Dq2ftp1fem%3Dxjh&__hv=2fMEUCIQDdSQ5%2FTw50Ssp%2BQll9%2BrFC63E4SZrrCMqjCkfAtB%2BNugIgCCYtLZTrCtkP36mzPJi4N%2FiWSpWxmqyl0MjZfcEsjdU%3D',
+            'touchdown-wins': 'https://m.yziyu02by.com/2152563/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=25zoh%3Dt45nvt68%3Dbnl&or=06yzgzoi%3Dpx5ea01gg%3Dius&__hv=2fMEQCIGp6V%2FCpL0KVLbnWFXj0cioWIdFHa7hg2f3pGKtzbFktAiBWLYKfgTQEIw4jMmGI9%2BO2IYNPK7%2BTURmUeQmL8g0roA%3D%3D&__sv=010301Rg1_zKTOpdBmtn6Y08fUT4Mv_UH1n2Wl8eAQXxccd1s',
+            'poker-kingdom': 'https://m.501ytxk3a.com/2009635/index.html?ot=70A7FBC6-4807-187C-63AD-E89D05BE1732&btt=1&ops=DGGAAAA0IUXNugpa1d88unyQooDKPtw6C1JVpkV0Z6gyRM8Zi4EieMH4qi8vhd1qQSnOgajZAE7sugpaIDR&l=id&ao=01bqj%3Dv45pxv68p%3Ddpn&or=10cdkdsm%3D501idhu3k%3Dmyw&__hv=2fMEQCIGImDOkgu3GPJOvaj89sh9bg1gJbewnPhQCc70xaaCCIAiBM9rqG0BwKibt%2BM84%2FWgVvTwEyPLV1QYdo5VLBuQSjUg%3D%3D&__sv=010601Sjxk7LDVhoQAtlmN1fTBQLATx2H-7DGyx_ROfCFxeUg'
+        };
+
+        // Tampilkan game berdasarkan ID
+        if (gameId && gameLinks[gameId]) {
+            iframe.src = gameLinks[gameId];
+        } else {
+            // Jika game tidak ditemukan, tampilkan pesan
+            document.body.innerHTML = "<h2 style='color:white; text-align:center; margin-top: 50%; font-family: Arial;'>Game tidak ditemukan.</h2>";
+        }
+    </script>
+</body>
+</html>
