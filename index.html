@@ -6,6 +6,20 @@
     <title>NUSA138 - Situs Resmi</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Paksa untuk Memastikan Overlay Tidak Menghalangi Klik */
+        .menu-overlay {
+            pointer-events: none !important;
+        }
+        .menu-overlay.active {
+            pointer-events: auto !important;
+        }
+        /* Memastikan link kategori tidak memiliki garis bawah */
+        .cat-item {
+            text-decoration: none !important;
+            color: inherit;
+        }
+    </style>
 </head>
 <body>
 
@@ -39,12 +53,13 @@
         }
     </script>
 
-    <!-- OVERLAY GELAP -->
+    <!-- OVERLAY GELAP UNTUK MENU SAMPING -->
     <div id="menuOverlay" class="menu-overlay" onclick="toggleMenu()"></div>
 
-    <!-- MENU SAMPING -->
+    <!-- MENU SAMPING (SIDEBAR) -->
     <div id="sideMenu" class="side-menu">
-        <!-- Tampilan Guest -->
+        
+        <!-- TAMPILAN GUEST -->
         <div id="guestView" style="display: flex; flex-direction: column; height: 100%;">
             <div class="menu-top">
                 <div class="close-btn-wrapper">
@@ -74,7 +89,7 @@
             </div>
         </div>
 
-        <!-- Tampilan Member (Sudah Login) -->
+        <!-- TAMPILAN MEMBER -->
         <div id="memberView" style="display: none; flex-direction: column; height: 100%;">
             <div class="menu-top">
                 <div class="close-btn-wrapper">
@@ -114,7 +129,7 @@
         </div>
     </div>
 
-    <!-- HEADER -->
+    <!-- HEADER UTAMA -->
     <header class="top-header">
         <div class="logo-area">
             <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/logo.png" alt="Nusa138 Logo">
@@ -158,16 +173,44 @@
         <div class="arrow-btn" onclick="scrollCategories('left')">
             <i class="fas fa-chevron-left"></i>
         </div>
+        
         <div class="category-scroll" id="categoryScroll">
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-dice"></i></div><span>Slot</span></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-bullseye"></i><span class="promo-badge">PROMO</span></div><span>Togel</span></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-kiwi-bird"></i></div><span>Sabung Ayam</span></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-gamepad"></i></div><span>Games</span></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-fish"></i></div><span>Tembak Ikan</span></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-running"></i></div><span>Sports</span></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-circle-notch"></i></div><span>Casino</span></div>
-            <div class="cat-item"><div class="cat-icon"><i class="fas fa-candy-cane"></i><span class="promo-badge">PROMO</span></div><span>Sweet Bonanza PC</span></div>
+            <!-- MENGUBAH DIV MENJADI TAG A (LINK ASLI) AGAR PASTI BISA DIKLIK -->
+            <a href="slot.html" class="cat-item">
+                <div class="cat-icon"><i class="fas fa-dice"></i></div>
+                <span>Slot</span>
+            </a>
+            
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fas fa-bullseye"></i><span class="promo-badge">PROMO</span></div>
+                <span>Togel</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fas fa-kiwi-bird"></i></div>
+                <span>Sabung Ayam</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fas fa-gamepad"></i></div>
+                <span>Games</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fas fa-fish"></i></div>
+                <span>Tembak Ikan</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fas fa-running"></i></div>
+                <span>Sports</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fas fa-circle-notch"></i></div>
+                <span>Casino</span>
+            </div>
+            <div class="cat-item">
+                <div class="cat-icon"><i class="fas fa-candy-cane"></i><span class="promo-badge">PROMO</span></div>
+                <span>Sweet Bonanza PC</span>
+            </div>
         </div>
+
         <div class="arrow-btn" onclick="scrollCategories('right')">
             <i class="fas fa-chevron-right"></i>
         </div>
@@ -214,7 +257,7 @@
         <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/infini88.png" alt="Infini88 Logo">
     </div>
 
-    <!-- KONTEN TEKS SEO -->
+    <!-- ARTIKEL SEO & SERTIFIKAT -->
     <article class="seo-article">
         <div class="certificate-container">
             <img src="https://raw.githubusercontent.com/veronica-fish/slot/main/sertifikat.png" alt="Sertifikat Nusa138" class="cert-img">
@@ -225,16 +268,25 @@
 
     <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-        <div class="nav-item" onclick="window.location.href='index.html'"><i class="fas fa-chevron-left"></i><span>Kembali</span></div>
-        <div class="nav-item" onclick="window.location.href='withdraw.html?tab=deposit'"><i class="fas fa-file-invoice-dollar"></i><span>Akun Saya</span></div>
-        <div class="nav-item" onclick="window.location.href='promosi.html'"><i class="fas fa-gift"></i><span>Promosi</span></div>
-        <div class="nav-item"><i class="fas fa-comment-dots"></i><span>Live Chat</span></div>
-        <div class="nav-item active"><i class="fas fa-home"></i><span>Beranda</span></div>
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-chevron-left"></i><span>Kembali</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='withdraw.html?tab=deposit'">
+            <i class="fas fa-file-invoice-dollar"></i><span>Akun Saya</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='promosi.html'">
+            <i class="fas fa-gift"></i><span>Promosi</span>
+        </div>
+        <div class="nav-item">
+            <i class="fas fa-comment-dots"></i><span>Live Chat</span>
+        </div>
+        <div class="nav-item active">
+            <i class="fas fa-home"></i><span>Beranda</span>
+        </div>
     </nav>
 
-    <!-- SCRIPT LOGIKA UI -->
+    <!-- JAVASCRIPT LOGIKA UI -->
     <script>
-        // --- 1. FITUR MENU SAMPING ---
         function toggleMenu() {
             var menu = document.getElementById("sideMenu");
             var overlay = document.getElementById("menuOverlay");
@@ -242,7 +294,6 @@
             overlay.classList.toggle("active");
         }
 
-        // --- 2. CEK STATUS LOGIN ---
         let isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'; 
         let currentUsername = localStorage.getItem('currentUser');
 
@@ -267,13 +318,9 @@
             }
         }
 
-        function simulateLogout() {
-            window.doLogout(); 
-        }
-
+        function simulateLogout() { window.doLogout(); }
         window.onload = updateUI;
 
-        // --- 3. ANIMASI JACKPOT ---
         let jackpotValue = 17929496463.73; 
         const maxJackpot = 999999999999999; 
         function formatRupiah(angka) {
@@ -285,7 +332,6 @@
             document.getElementById("jackpotAmount").innerText = formatRupiah(jackpotValue);
         }, 2000);
 
-        // --- 4. BANNER CAROUSEL ---
         const banners = [
             "https://raw.githubusercontent.com/veronica-fish/slot/main/banner1.png",
             "https://raw.githubusercontent.com/veronica-fish/slot/main/banner2.png"
@@ -308,7 +354,6 @@
         function resetTimer() { clearInterval(bannerInterval); startTimer(); }
         window.addEventListener('load', () => { startTimer(); });
 
-        // --- 5. SCROLL KATEGORI ---
         function scrollCategories(direction) {
             const container = document.getElementById('categoryScroll');
             const scrollAmount = 150; 
